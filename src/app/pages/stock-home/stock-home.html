@@ -1,0 +1,58 @@
+<div class="stock-home">
+  <header class="stock-home__header">
+    <h1>Inventario de Stock</h1>
+    <div class="stock-home__header-actions">
+      <button type="button" class="btn btn-danger" (click)="logOut()">Cerrar Sesion</button>
+    </div>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="stock-home__error" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <section class="card p-3" aria-labelledby="stock-home-title">
+    <div class="stock-home__title-row">
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToStockEditor()">
+        Agregar componente
+      </button>
+    </div>
+
+    <div class="stock-home-table" role="table">
+      <div class="stock-home-table__row stock-home-table__row--head" role="row">
+        <div role="columnheader">Componente</div>
+        <div class="stock-home-table__qty" role="columnheader">Cantidad</div>
+        <div class="stock-home-table__actions" role="columnheader">Accion</div>
+      </div>
+
+      @if (componentes().length === 0) {
+        <div class="stock-home-table__row stock-home-table__row--empty" role="row">
+          <div role="cell">No hay registros de stock cargados.</div>
+        </div>
+      } @else {
+        @for (item of componentes(); track item.id) {
+          <div class="stock-home-table__row" role="row">
+            <div role="cell">{{ item.componente }}</div>
+            <div class="stock-home-table__qty" role="cell">{{ item.cantidad }}</div>
+            <div class="stock-home-table__actions" role="cell">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary"
+                (click)="goToItemEditor(item.id)"
+              >
+                E
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteItem(item)"
+                [disabled]="deletingId() === item.id"
+              >
+                {{ deletingId() === item.id ? 'X' : 'X' }}
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </section>
+</div>

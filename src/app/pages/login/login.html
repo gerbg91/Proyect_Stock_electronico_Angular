@@ -1,0 +1,34 @@
+<main class="login-page">
+  <section class="login-card" aria-labelledby="login-title">
+    <h1 id="login-title" class="login-card__title">Stock del Taller</h1>
+    <p class="login-card__subtitle">Inicia sesion para gestionar componentes y cantidades</p>
+
+    <form class="login-form" (ngSubmit)="ingresar()">
+      <label for="email" class="login-form__label">Email</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        class="login-form__input"
+        placeholder="tu@email.com"
+        autocomplete="email"
+        required
+      />
+
+      <label for="password" class="login-form__label">Contrasena</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        class="login-form__input"
+        placeholder="Ingresa tu contrasena"
+        autocomplete="current-password"
+        required
+      />
+
+      <button type="submit" class="login-form__button">Entrar</button>
+    </form>
+  </section>
+</main>

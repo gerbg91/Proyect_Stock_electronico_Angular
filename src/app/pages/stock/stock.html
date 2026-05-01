@@ -1,0 +1,61 @@
+<div class="stock-page">
+  <header class="stock-page__header">
+    <h1>Stock del Taller</h1>
+    <div class="stock-form__actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="goToStockGrid()">
+        Volver a parrilla
+      </button>
+      <button type="button" class="btn btn-danger" (click)="logOut()">Cerrar Sesion</button>
+    </div>
+  </header>
+
+  <main class="stock-page__main">
+    <section class="card p-3">
+      <h2 class="h5 mb-3">{{ isEditing() ? 'Editar componente' : 'Nuevo componente' }}</h2>
+
+      <form [formGroup]="stockForm" (ngSubmit)="submitForm()" class="stock-form">
+        <label for="componente" class="form-label">Componente</label>
+        <input
+          id="componente"
+          type="text"
+          class="form-control"
+          formControlName="componente"
+          placeholder="Ej: Resistencia 220R"
+        />
+        @if (stockForm.controls.componente.touched && stockForm.controls.componente.invalid) {
+          <p class="stock-form__error" role="alert">El nombre del componente es obligatorio.</p>
+        }
+
+        <label for="cantidad" class="form-label mt-2">Cantidad</label>
+        <input
+          id="cantidad"
+          type="number"
+          class="form-control"
+          formControlName="cantidad"
+          min="0"
+          step="1"
+        />
+        @if (stockForm.controls.cantidad.touched && stockForm.controls.cantidad.invalid) {
+          <p class="stock-form__error" role="alert">La cantidad debe ser mayor o igual a 0.</p>
+        }
+
+        <div class="stock-form__actions">
+          <button type="submit" class="btn btn-primary" [disabled]="saving()">
+            {{ saving() ? 'Guardando...' : (isEditing() ? 'Guardar cambios' : 'Agregar') }}
+          </button>
+          @if (isEditing()) {
+            <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">Cancelar</button>
+          }
+        </div>
+      </form>
+
+      @if (errorMessage()) {
+        <p class="stock-status stock-status--error" role="alert">{{ errorMessage() }}</p>
+      }
+      @if (successMessage()) {
+        <p class="stock-status stock-status--ok" role="status">{{ successMessage() }}</p>
+      }
+    </section>
+
+  </main>
+</div>
